@@ -9,10 +9,15 @@ MongoClient.connect('mongodb://localhost:27017/TodoDb', (err, db) => {
     }
      console.log("connected to mongodb");
 
-     db.collection('Todos').find().toArray().then((docs)=>{
-        console.log(JSON.stringify(docs, undefined,2))},
-    (err)=>{
-        console.log(err);
-    });
+    //  db.collection('Todos').find().toArray().then((docs)=>{
+    //     console.log(JSON.stringify(docs, undefined,2))},
+    // (err)=>{
+    //     console.log(err);
+    // });
+
+    db.collection('Todos').findOneAndDelete({text: 'do something else'})
+                            .then((result)=>{
+                                console.log(result);
+                            });
 
 });
