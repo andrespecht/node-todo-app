@@ -1,18 +1,24 @@
-const {MongoClient, ObjectID} = require('mongodb');
+const {
+    MongoClient,
+    ObjectID
+} = require('mongodb');
 
-MongoClient.connect('mongodb://localhost:27017/TodoDb',(err,db)=>{
-    if(err){
+MongoClient.connect('mongodb://localhost:27017/TodoDb', (err, db) => {
+    if (err) {
         return console.log("could not connect");
     }
     console.log("connected to mongodb");
-    db.collection('Todos').insertOne({text: "do anything",completed: false},
-        (err,result)=> {
-            if(err){
+    db.collection('Todos').insertOne({
+            text: "do anything",
+            completed: false
+        },
+        (err, result) => {
+            if (err) {
                 return console.log("could not insert data");
             }
-            console.log(JSON.stringify(result.ops,undefined,2));
+            console.log(JSON.stringify(result.ops, undefined, 2));
         }
-    );
+    )
 
 
 });
