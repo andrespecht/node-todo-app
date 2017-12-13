@@ -19,7 +19,9 @@ const todos = [{
     {
         _id: new ObjectID(),
         title: "the second title",
-        text: "the second text"
+        text: "the second text",
+        completed: true,
+        completedAt: 3333
 
     }
 ];
@@ -124,11 +126,11 @@ describe('DELETE /todos/:id', () => {
         request(app)
             .delete(`/todos/${hexId}`)
             .expect(200)
-            .expect((res) =>{
+            .expect((res) => {
                 expect(res.body.todo._id).toBe(hexId);
             })
-            .end((err,res) =>{
-                if(err){
+            .end((err, res) => {
+                if (err) {
                     done(err);
                 }
                 Todo.findById(hexId).then((todo) => {
@@ -151,10 +153,33 @@ describe('DELETE /todos/:id', () => {
 
     it('should return 404 if OID is not valid', (done) => {
         request(app)
-        .delete('/todos/123')
-        .expect(404)
-        .end(done);
+            .delete('/todos/123')
+            .expect(404)
+            .end(done);
     });
 
+
+});
+
+describe('PATCH /todos/:id', () => {
+
+    it('should update the todo', (done)=>{
+        var myText = 'new text';
+        var id = todos[0]._id.toHexString();
+        request(app)
+            .patch(`/todos/${id}`)
+            .send({
+                text: myText,
+                completed: true
+            })
+            .expect(200)
+            .expect((res)=>{
+                console.log(res.body.todo);
+                expect(res.body.todo.text).toBe(myText);
+                expect(res.body.todo.completed).toBe(true);
+                
+            })
+            .end(done);
+    })
 
 });
