@@ -2,3 +2,4 @@ node_modules/
 data/
 .vscode/
 npm-debug.log.*
+server/config/config.json
